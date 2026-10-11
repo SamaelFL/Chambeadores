@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="latigo-version" content="{{VERSION}}">
+<meta name="color-scheme" content="dark light">
+<title>La caseta</title>
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="franja" aria-hidden="true"></div>
+<header class="barra">
+  <div class="marca"><img src="icono.svg" alt="" width="24" height="24"><span>La caseta</span></div>
+  <nav class="obras" role="tablist" aria-label="Sesiones de Claude Code"></nav>
+  <div class="acciones">
+    <button type="button" class="boton-icono" id="btn-sonido" aria-pressed="true" title="Sonido (S)" aria-label="Sonido">🔊</button>
+    <button type="button" class="boton-texto" id="btn-flotante" title="Ventana siempre visible (F)">Ventana flotante</button>
+    <button type="button" class="boton-icono" id="btn-ajustes" title="Ajustes" aria-label="Ajustes" aria-haspopup="dialog">⚙</button>
+  </div>
+</header>
+
+<main class="obra">
+  <section class="escenario" aria-label="La caseta">
+    <div class="lienzo">
+      <div class="marco">
+        <canvas role="img" aria-label="La caseta, una oficina de obra de noche: el capataz, los peones y lo que está haciendo cada uno"></canvas>
+        <div class="globos"></div>
+      </div>
+    </div>
+    <p class="ayuda-latigo">Arrastra el látigo y suéltale un chicotazo al capataz, o haz clic en él (tecla L).</p>
+  </section>
+
+  <aside class="planos" aria-label="Planos de la obra">
+    <section class="ficha"></section>
+    <section class="latigo" aria-labelledby="titulo-latigo">
+      <h2 id="titulo-latigo">Látigo</h2>
+      <div class="cascos" role="img"></div>
+      <p class="latigo-estado"></p>
+      <div class="enfriamiento" hidden><div class="medidor"><span></span></div><span class="enfriamiento-texto"></span></div>
+      <button type="button" class="boton-latigo" id="btn-latigo">Dar latigazo</button>
+      <p class="latigo-nota" aria-live="polite"></p>
+    </section>
+    <section class="cuadrilla" aria-labelledby="titulo-cuadrilla">
+      <h2 id="titulo-cuadrilla">Cuadrilla</h2>
+      <ol class="lista-cuadrilla"></ol>
+    </section>
+    <section class="bitacora" aria-labelledby="titulo-bitacora">
+      <h2 id="titulo-bitacora">Bitácora de obra</h2>
+      <ol class="lista-bitacora"></ol>
+    </section>
+  </aside>
+</main>
+
+<div class="aviso" role="status" aria-live="polite"></div>
+<div class="conexion" role="alert" hidden>Sin conexión con la caseta. Reintentando…</div>
+
+<dialog class="ajustes" aria-labelledby="titulo-ajustes">
+  <h2 id="titulo-ajustes">Ajustes</h2>
+  <fieldset>
+    <legend>Sonidos</legend>
+    <div class="fila-ajuste"><label><input type="checkbox" data-sonido="latigazo"> Latigazo</label><button type="button" data-probar="latigazo">Probar</button></div>
+    <div class="fila-ajuste"><label><input type="checkbox" data-sonido="peon_listo"> Un peón terminó</label><button type="button" data-probar="peon_listo">Probar</button></div>
+    <div class="fila-ajuste"><label><input type="checkbox" data-sonido="permiso"> Pide permiso</label><button type="button" data-probar="permiso">Probar</button></div>
+    <div class="fila-ajuste"><label><input type="checkbox" data-sonido="listo"> Terminó un turno largo</label><button type="button" data-probar="listo">Probar</button></div>
+    <div class="fila-ajuste"><label><input type="checkbox" data-sonido="error"> Error de la API</label><button type="button" data-probar="error">Probar</button></div>
+  </fieldset>
+  <fieldset>
+    <legend>Volumen</legend>
+    <input type="range" min="0" max="100" step="5" id="ajuste-volumen" aria-label="Volumen">
+  </fieldset>
+  <div class="fila-ajuste"><label><input type="checkbox" id="ajuste-abrir"> Abrir la caseta cuando arranque Claude Code</label></div>
+  <button type="button" class="boton-latigo cerrar" id="btn-cerrar-ajustes">Listo</button>
+</dialog>
+
+<script src="iso.js"></script>
+<script src="figuras.js"></script>
+<script src="escena.js"></script>
+<script src="demo.js"></script>
+<script src="panel.js"></script>
+</body>
+</html>

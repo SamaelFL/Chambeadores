@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+latigo/estado/
+latigo/sonidos/
+latigo/config.json
+latigo/instalacion.json
+latigo/respaldos/
+*.log
+.claude/
