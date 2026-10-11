@@ -1,12 +1,14 @@
-<p align="center"><img src="docs/caseta.png" alt="La caseta: una oficina de obra de noche, en isométrico, con el capataz en su tarima y los peones trabajando en sus escritorios" width="100%"></p>
+<p align="center"><img src="docs/caseta.gif" alt="La caseta: una oficina de obra de noche, en isométrico. El capataz recibe un latigazo, se desquita con un chicotazo y llegan los peones a sus escritorios" width="100%"></p>
 
-# Oficina virtual con látigo
+# Chambeadores
+
+**Oficina virtual con látigo.**
 
 Cuando una tarea larga se puede partir, le das un latigazo al capataz (tu sesión de Claude Code) y él reparte lo que falta entre **peones** (subagentes) que trabajan en paralelo, cada uno en su propio worktree de git.
 
 Mientras tanto, **la caseta**, una oficina de obra en el turno de noche, te enseña en vivo qué hace cada uno: si piensa, qué archivo lee o edita, qué comando corre, si te pide permiso y cuándo termina. Mirar la caseta no gasta tokens.
 
-**[Pruébala en el navegador](https://samaelfl.github.io/oficina-con-latigo/?demo)**: es la demostración, no necesita instalar nada. Agarra el látigo con el mouse y suéltale un chicotazo al capataz.
+**[Pruébala en el navegador](https://samaelfl.github.io/Chambeadores/?demo)**: es la demostración, no necesita instalar nada. Agarra el látigo con el mouse y suéltale un chicotazo al capataz.
 
 ## Instalar
 

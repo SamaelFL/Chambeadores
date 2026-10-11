@@ -1,0 +1,56 @@
+name: demo
+
+on:
+  push:
+    branches: [main]
+    paths: ["latigo/web/**", "latigo/nucleo.py", ".github/workflows/demo.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Armar la demostración
+        run: |
+          mkdir -p _site/sonidos
+          cp -r latigo/web/. _site/
+          python - <<'PY'
+          import os, sys
+          sys.path.insert(0, "latigo")
+          import nucleo
+          for nombre in nucleo.SONIDOS:
+              nucleo._escribir_wav(os.path.join("_site", "sonidos", nombre + ".wav"), nucleo._sintetizar(nombre), 0.7)
+          PY
+          # En la página pública no hay oficina local: siempre abre la demostración.
+          python - <<'PY'
+          p = "_site/index.html"
+          s = open(p, encoding="utf-8").read()
+          s = s.replace("{{VERSION}}", "demo")
+          s = s.replace("<head>", "<head>\n<script>if (!new URLSearchParams(location.search).has('demo')) location.replace('?demo' + location.hash);</script>", 1)
+          open(p, "w", encoding="utf-8").write(s)
+          PY
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
