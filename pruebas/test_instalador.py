@@ -101,7 +101,7 @@ class Instalador(unittest.TestCase):
         os.makedirs(os.path.join(cls.claude, "agents"))
         with open(os.path.join(cls.claude, "agents", "peon.md"), "w", encoding="utf-8") as f:
             f.write(PEON_PROPIO)
-        cls.env = dict(os.environ, CLAUDE_CONFIG_DIR=cls.claude)
+        cls.env = dict(os.environ, CLAUDE_CONFIG_DIR=cls.claude, PYTHONIOENCODING="utf-8")
         cls.env.pop("LATIGO_DIR", None)
         cls.puerto = puerto_libre()
         cls.instalar()
@@ -272,7 +272,7 @@ class InstaladorCuidadoso(unittest.TestCase):
         self.tmp = tempfile.mkdtemp()
         self.claude = os.path.join(self.tmp, "claude")
         os.makedirs(self.claude)
-        self.env = dict(os.environ, CLAUDE_CONFIG_DIR=self.claude)
+        self.env = dict(os.environ, CLAUDE_CONFIG_DIR=self.claude, PYTHONIOENCODING="utf-8")
         self.env.pop("LATIGO_DIR", None)
 
     def tearDown(self):

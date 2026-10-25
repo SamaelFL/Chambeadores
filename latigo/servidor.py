@@ -20,6 +20,7 @@ import os
 import secrets
 import signal
 import socket
+import socketserver
 import sys
 import threading
 import time
@@ -646,6 +647,14 @@ class Servidor(ThreadingHTTPServer):
     # En macOS/Linux permite reabrir el puerto al reiniciar (TIME_WAIT). En Windows SO_REUSEADDR
     # dejaría que dos procesos escuchen el mismo puerto, así que ahí no.
     allow_reuse_address = os.name != "nt"
+
+    def server_bind(self):
+        # HTTPServer.server_bind hace una búsqueda DNS inversa (socket.getfqdn) que en algunas
+        # redes tarda varios segundos y retrasa la caseta. Solo escuchamos en 127.0.0.1: no hace falta.
+        socketserver.TCPServer.server_bind(self)
+        host, puerto = self.server_address[:2]
+        self.server_name = host
+        self.server_port = puerto
 
 
 def crear(puerto_pedido: int = None, demo: bool = False):
