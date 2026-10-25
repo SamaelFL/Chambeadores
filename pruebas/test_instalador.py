@@ -109,7 +109,7 @@ class Instalador(unittest.TestCase):
     @classmethod
     def instalar(cls, *extra):
         p = subprocess.run([sys.executable, os.path.join(RAIZ, "instalar.py"), "--sin-ventana", "--no-abrir",
-                            "--puerto", str(cls.puerto)] + list(extra), capture_output=True, text=True, env=cls.env, timeout=120)
+                            "--puerto", str(cls.puerto)] + list(extra), capture_output=True, text=True, encoding="utf-8", env=cls.env, timeout=120)
         assert p.returncode == 0, p.stdout + p.stderr
         return p.stdout
 
@@ -221,7 +221,7 @@ class Instalador(unittest.TestCase):
         escribir(os.path.join(proy, "angular.json"), "{}")
         escribir(os.path.join(proy, "tsconfig.app.json"), "{}")
         p = subprocess.run([sys.executable, os.path.join(self.claude, "latigo", "latigo.py"), "init", proy],
-                           capture_output=True, text=True, env=self.env, timeout=30)
+                           capture_output=True, text=True, encoding="utf-8", env=self.env, timeout=30)
         self.assertEqual(p.returncode, 0, p.stderr)
         ficha = leer(os.path.join(proy, ".claude", "latigo.md"))
         self.assertIn("Angular 18 (npm)", ficha)
@@ -241,7 +241,7 @@ class Instalador(unittest.TestCase):
             "<project><parent><artifactId>spring-boot-starter-parent</artifactId><version>3.3.2</version></parent>"
             "<properties><java.version>21</java.version></properties></project>")
         p = subprocess.run([sys.executable, os.path.join(self.claude, "latigo", "latigo.py"), "init", proy],
-                           capture_output=True, text=True, env=self.env, timeout=30)
+                           capture_output=True, text=True, encoding="utf-8", env=self.env, timeout=30)
         self.assertEqual(p.returncode, 0, p.stderr)
         ficha = leer(os.path.join(proy, ".claude", "latigo.md"))
         self.assertIn("Java 21, Spring Boot 3.3.2, Maven", ficha)
@@ -250,7 +250,7 @@ class Instalador(unittest.TestCase):
 
     def test_9_desinstalar(self):
         p = subprocess.run([sys.executable, os.path.join(RAIZ, "instalar.py"), "--desinstalar"], capture_output=True,
-                           text=True, env=self.env, timeout=60)
+                           text=True, encoding="utf-8", env=self.env, timeout=60)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         s = self.settings()
         self.assertEqual(s["hooks"], {"SessionStart": [{"hooks": [self.ajeno]}]})
@@ -280,7 +280,7 @@ class InstaladorCuidadoso(unittest.TestCase):
 
     def correr(self, *args):
         return subprocess.run([sys.executable, os.path.join(RAIZ, "instalar.py"), "--sin-ventana", "--no-abrir",
-                               "--puerto", str(puerto_libre())] + list(args), capture_output=True, text=True,
+                               "--puerto", str(puerto_libre())] + list(args), capture_output=True, text=True, encoding="utf-8",
                               env=self.env, timeout=120)
 
     def test_settings_roto_no_toca_nada(self):
@@ -308,7 +308,7 @@ class InstaladorCuidadoso(unittest.TestCase):
         with open(real, encoding="utf-8") as f:
             self.assertIn("hooks", json.load(f))
         p = subprocess.run([sys.executable, os.path.join(RAIZ, "instalar.py"), "--desinstalar"], capture_output=True,
-                           text=True, env=self.env, timeout=60)
+                           text=True, encoding="utf-8", env=self.env, timeout=60)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         self.assertTrue(os.path.islink(enlace))
         with open(real, encoding="utf-8") as f:

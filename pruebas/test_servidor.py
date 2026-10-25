@@ -51,7 +51,13 @@ class Integracion(unittest.TestCase):
                 break
             except OSError:
                 time.sleep(0.1)
-        with open(os.path.join(cls.dir_latigo, "estado", "servidor.json"), encoding="utf-8") as f:
+        ruta = os.path.join(cls.dir_latigo, "estado", "servidor.json")
+        if not os.path.exists(ruta):
+            cls.proc.terminate()
+            salida, errores = cls.proc.communicate(timeout=10)
+            raise RuntimeError("el servidor no arrancó (código %s):\n%s\n%s" % (
+                cls.proc.returncode, salida.decode("utf-8", "replace"), errores.decode("utf-8", "replace")))
+        with open(ruta, encoding="utf-8") as f:
             cls.token = json.load(f)["token"]
 
     @classmethod
