@@ -2,6 +2,8 @@
 
 # Chambeadores
 
+[![pruebas](https://github.com/SamaelFL/Chambeadores/actions/workflows/pruebas.yml/badge.svg)](https://github.com/SamaelFL/Chambeadores/actions/workflows/pruebas.yml) ![Linux · macOS · Windows](https://img.shields.io/badge/Linux%20%C2%B7%20macOS%20%C2%B7%20Windows-probado-success) [![licencia MIT](https://img.shields.io/badge/licencia-MIT-blue)](LICENSE)
+
 **Oficina virtual con látigo.**
 
 Cuando una tarea larga se puede partir, le das un latigazo al capataz (tu sesión de Claude Code) y él reparte lo que falta entre **peones** (subagentes) que trabajan en paralelo, cada uno en su propio worktree de git.
